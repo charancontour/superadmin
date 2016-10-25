@@ -73,7 +73,7 @@
           <div class="row">
           		<div class="col-md-8 col-md-offset-2">
           			<div class="panel panel-default">
-          				<div class="panel-heading">Create User</div>
+          				<div class="panel-heading">Create Student</div>
           				<div class="panel-body">
           					@if (count($errors) > 0)
           						<div class="alert alert-danger">
@@ -118,6 +118,18 @@
           							</div>
           						</div>
 
+
+                      <div class="form-group">
+          							<label class="col-md-4 control-label">Location</label>
+          							<div class="col-md-6">
+                          <select class="form-control" name="location_id">
+                            @foreach(App\Location::all() as $location)
+                              <option value={{$location->id}}>{{$location->location_name}}</option>
+                            @endforeach
+                          </select>
+          							</div>
+          						</div>
+
           						<div class="form-group">
           							<label class="col-md-4 control-label">Password</label>
           							<div class="col-md-6">
@@ -142,6 +154,97 @@
           			</div>
           		</div>
           	</div>
+
+            <div class="row">
+            		<div class="col-md-8 col-md-offset-2">
+            			<div class="panel panel-default">
+            				<div class="panel-heading">Edit Student</div>
+            				<div class="panel-body">
+            					@if (count($errors) > 0)
+            						<div class="alert alert-danger">
+            							<strong>Whoops!</strong> There were some problems with your input.<br><br>
+            							<ul>
+            								@foreach ($errors->all() as $error)
+            									<li>{{ $error }}</li>
+            								@endforeach
+            							</ul>
+            						</div>
+            					@endif
+
+            					<form class="form-horizontal" role="form" method="POST" action="{{ url('/superadmin/updateuser') }}">
+            						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <?php $user = App\User::find(8);
+                           $user_name = $user->login;
+                           $user_name = str_replace(Config::get('efront.LoginPrefix'),"",$user_name);
+                           if(!is_numeric($user_name)){
+                             $user_name = $user->login;
+                           }
+                        ?>
+                        <div class="form-group">
+            							<label class="col-md-4 control-label">Payroll Number</label>
+            							<div class="col-md-6">
+            								<input type="text" class="form-control" name="login" value="{{ $user_name }}">
+            							</div>
+            						</div>
+
+                        <div class="form-group">
+            							<label class="col-md-4 control-label">Firstname</label>
+            							<div class="col-md-6">
+            								<input type="text" class="form-control" name="firstname" value="{{ $user->firstname }}">
+            							</div>
+            						</div>
+
+                        <div class="form-group">
+            							<label class="col-md-4 control-label">Lastname</label>
+            							<div class="col-md-6">
+            								<input type="text" class="form-control" name="lastname" value="{{ $user->lastname }}">
+            							</div>
+            						</div>
+
+
+            						<div class="form-group">
+            							<label class="col-md-4 control-label">E-Mail Address</label>
+            							<div class="col-md-6">
+            								<input type="email" class="form-control" name="email" value="{{ $user->email }}">
+            							</div>
+            						</div>
+
+
+                        <div class="form-group">
+            							<label class="col-md-4 control-label">Location</label>
+            							<div class="col-md-6">
+                            <select class="form-control" name="location_id" value="{{$user->location_id}}">
+                              @foreach(App\Location::all() as $location)
+                                <option value={{$location->id}}>{{$location->location_name}}</option>
+                              @endforeach
+                            </select>
+            							</div>
+            						</div>
+
+            						<div class="form-group">
+            							<label class="col-md-4 control-label">Password</label>
+            							<div class="col-md-6">
+            								<input type="password" class="form-control" name="password" placeholder="Leave it blank if you donot like to change password">
+            							</div>
+            						</div>
+
+                        <div class="form-group">
+            							<label class="col-md-4 control-label">Confirm Password</label>
+            							<div class="col-md-6">
+            								<input type="password" class="form-control" name="confirm-password" placeholder="Leave it blank if you donot like to change password">
+            							</div>
+            						</div>
+
+            						<div class="form-group">
+            							<div class="col-md-6 col-md-offset-4">
+            								<button type="submit" class="btn btn-primary">Update Student Info</button>
+            							</div>
+            						</div>
+            					</form>
+            				</div>
+            			</div>
+            		</div>
+            	</div>
 
         </div>
       </div>
