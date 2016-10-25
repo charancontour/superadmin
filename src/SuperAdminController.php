@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class SuperAdminController extends Controller {
 
-	//
+	public function usercreate(Request $request){
+    dd($request);
+  }
 
 }
