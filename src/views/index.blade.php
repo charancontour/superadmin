@@ -186,6 +186,7 @@
             								<input type="text" class="form-control" name="login" value="{{ $user_name }}">
             							</div>
             						</div>
+                        <input type="hidden" name="user_id" value="{{$user->id}}">
 
                         <div class="form-group">
             							<label class="col-md-4 control-label">Firstname</label>
