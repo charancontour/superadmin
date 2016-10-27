@@ -153,100 +153,215 @@
           				</div>
           			</div>
           		</div>
+          </div>
+
+          <div class="row">
+          		<div class="col-md-8 col-md-offset-2">
+          			<div class="panel panel-default">
+          				<div class="panel-heading">Edit Student</div>
+          				<div class="panel-body">
+          					@if (count($errors) > 0)
+          						<div class="alert alert-danger">
+          							<strong>Whoops!</strong> There were some problems with your input.<br><br>
+          							<ul>
+          								@foreach ($errors->all() as $error)
+          									<li>{{ $error }}</li>
+          								@endforeach
+          							</ul>
+          						</div>
+          					@endif
+
+          					<form class="form-horizontal" role="form" method="POST" action="{{ url('/superadmin/updateuser') }}">
+          						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+                      <?php $user = App\User::find(8);
+                         $user_name = $user->login;
+                         $user_name = str_replace(Config::get('efront.LoginPrefix'),"",$user_name);
+                         if(!is_numeric($user_name)){
+                           $user_name = $user->login;
+                         }
+                      ?>
+                      <div class="form-group">
+          							<label class="col-md-4 control-label">Payroll Number</label>
+          							<div class="col-md-6">
+          								<input type="text" class="form-control" name="login" value="{{ $user_name }}">
+          							</div>
+          						</div>
+                      <input type="hidden" name="user_id" value="{{$user->id}}">
+
+                      <div class="form-group">
+          							<label class="col-md-4 control-label">Firstname</label>
+          							<div class="col-md-6">
+          								<input type="text" class="form-control" name="firstname" value="{{ $user->firstname }}">
+          							</div>
+          						</div>
+
+                      <div class="form-group">
+          							<label class="col-md-4 control-label">Lastname</label>
+          							<div class="col-md-6">
+          								<input type="text" class="form-control" name="lastname" value="{{ $user->lastname }}">
+          							</div>
+          						</div>
+
+
+          						<div class="form-group">
+          							<label class="col-md-4 control-label">E-Mail Address</label>
+          							<div class="col-md-6">
+          								<input type="email" class="form-control" name="email" value="{{ $user->email }}">
+          							</div>
+          						</div>
+
+
+                      <div class="form-group">
+          							<label class="col-md-4 control-label">Location</label>
+          							<div class="col-md-6">
+                          <select class="form-control" name="location_id" value="{{$user->location_id}}">
+                            @foreach(App\Location::all() as $location)
+                              <option value={{$location->id}}>{{$location->location_name}}</option>
+                            @endforeach
+                          </select>
+          							</div>
+          						</div>
+
+          						<div class="form-group">
+          							<label class="col-md-4 control-label">Password</label>
+          							<div class="col-md-6">
+          								<input type="password" class="form-control" name="password" placeholder="Leave it blank if you donot like to change password">
+          							</div>
+          						</div>
+
+                      <div class="form-group">
+          							<label class="col-md-4 control-label">Confirm Password</label>
+          							<div class="col-md-6">
+          								<input type="password" class="form-control" name="confirm-password" placeholder="Leave it blank if you donot like to change password">
+          							</div>
+          						</div>
+
+          						<div class="form-group">
+          							<div class="col-md-6 col-md-offset-4">
+          								<button type="submit" class="btn btn-primary">Update Student Info</button>
+          							</div>
+          						</div>
+          					</form>
+          				</div>
+          			</div>
+          		</div>
           	</div>
 
+          <div class="row">
+              <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                  <div class="panel-heading">Create Location</div>
+                  <div class="panel-body">
+                    @if (count($errors) > 0)
+                      <div class="alert alert-danger">
+                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                        <ul>
+                          @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                          @endforeach
+                        </ul>
+                      </div>
+                    @endif
+
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/superadmin/createlocation') }}">
+                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                      <div class="form-group">
+                        <label class="col-md-4 control-label">Location Name</label>
+                        <div class="col-md-6">
+                          <input type="text" class="form-control" name="location_name" value="">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-md-6 col-md-offset-4">
+                          <button type="submit" class="btn btn-primary">Create Branch</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="row">
-            		<div class="col-md-8 col-md-offset-2">
-            			<div class="panel panel-default">
-            				<div class="panel-heading">Edit Student</div>
-            				<div class="panel-body">
-            					@if (count($errors) > 0)
-            						<div class="alert alert-danger">
-            							<strong>Whoops!</strong> There were some problems with your input.<br><br>
-            							<ul>
-            								@foreach ($errors->all() as $error)
-            									<li>{{ $error }}</li>
-            								@endforeach
-            							</ul>
-            						</div>
-            					@endif
+                <div class="col-md-8 col-md-offset-2">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">Assign user to Group</div>
+                    <div class="panel-body">
+                      @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                          <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                          <ul>
+                            @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                            @endforeach
+                          </ul>
+                        </div>
+                      @endif
 
-            					<form class="form-horizontal" role="form" method="POST" action="{{ url('/superadmin/updateuser') }}">
-            						<input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <?php $user = App\User::find(8);
-                           $user_name = $user->login;
-                           $user_name = str_replace(Config::get('efront.LoginPrefix'),"",$user_name);
-                           if(!is_numeric($user_name)){
-                             $user_name = $user->login;
-                           }
-                        ?>
+                      <form class="form-horizontal" role="form" method="POST" action="{{ url('/superadmin/assignusertogroup') }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="form-group">
-            							<label class="col-md-4 control-label">Payroll Number</label>
-            							<div class="col-md-6">
-            								<input type="text" class="form-control" name="login" value="{{ $user_name }}">
-            							</div>
-            						</div>
-                        <input type="hidden" name="user_id" value="{{$user->id}}">
-
+                          <label class="col-md-4 control-label">User Id</label>
+                          <div class="col-md-6">
+                            <input type="text" class="form-control" name="user_id" value="">
+                          </div>
+                        </div>
                         <div class="form-group">
-            							<label class="col-md-4 control-label">Firstname</label>
-            							<div class="col-md-6">
-            								<input type="text" class="form-control" name="firstname" value="{{ $user->firstname }}">
-            							</div>
-            						</div>
-
+                          <label class="col-md-4 control-label">Group Id</label>
+                          <div class="col-md-6">
+                            <input type="text" class="form-control" name="group_id" value="">
+                          </div>
+                        </div>
                         <div class="form-group">
-            							<label class="col-md-4 control-label">Lastname</label>
-            							<div class="col-md-6">
-            								<input type="text" class="form-control" name="lastname" value="{{ $user->lastname }}">
-            							</div>
-            						</div>
+                          <div class="col-md-6 col-md-offset-4">
+                            <button type="submit" class="btn btn-primary">Assign user to Group</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">Remove user from Group</div>
+                    <div class="panel-body">
+                      @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                          <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                          <ul>
+                            @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                            @endforeach
+                          </ul>
+                        </div>
+                      @endif
 
-
-            						<div class="form-group">
-            							<label class="col-md-4 control-label">E-Mail Address</label>
-            							<div class="col-md-6">
-            								<input type="email" class="form-control" name="email" value="{{ $user->email }}">
-            							</div>
-            						</div>
-
-
+                      <form class="form-horizontal" role="form" method="POST" action="{{ url('/superadmin/removeuserfromgroup') }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="form-group">
-            							<label class="col-md-4 control-label">Location</label>
-            							<div class="col-md-6">
-                            <select class="form-control" name="location_id" value="{{$user->location_id}}">
-                              @foreach(App\Location::all() as $location)
-                                <option value={{$location->id}}>{{$location->location_name}}</option>
-                              @endforeach
-                            </select>
-            							</div>
-            						</div>
-
-            						<div class="form-group">
-            							<label class="col-md-4 control-label">Password</label>
-            							<div class="col-md-6">
-            								<input type="password" class="form-control" name="password" placeholder="Leave it blank if you donot like to change password">
-            							</div>
-            						</div>
-
+                          <label class="col-md-4 control-label">User Id</label>
+                          <div class="col-md-6">
+                            <input type="text" class="form-control" name="user_id" value="">
+                          </div>
+                        </div>
                         <div class="form-group">
-            							<label class="col-md-4 control-label">Confirm Password</label>
-            							<div class="col-md-6">
-            								<input type="password" class="form-control" name="confirm-password" placeholder="Leave it blank if you donot like to change password">
-            							</div>
-            						</div>
-
-            						<div class="form-group">
-            							<div class="col-md-6 col-md-offset-4">
-            								<button type="submit" class="btn btn-primary">Update Student Info</button>
-            							</div>
-            						</div>
-            					</form>
-            				</div>
-            			</div>
-            		</div>
-            	</div>
-
+                          <label class="col-md-4 control-label">Group Id</label>
+                          <div class="col-md-6">
+                            <input type="text" class="form-control" name="group_id" value="">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-md-6 col-md-offset-4">
+                            <button type="submit" class="btn btn-primary">Remove user from Group</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
         </div>
       </div>
     </div>
