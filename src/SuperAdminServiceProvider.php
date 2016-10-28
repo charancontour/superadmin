@@ -13,6 +13,9 @@ class SuperAdminServiceProvider extends ServiceProvider {
 	{
 		$this->publishes([
         	__DIR__.'/views' => base_path('resources/views/vendor/superadmin/'),
+        	__DIR__.'/css' => base_path('public/css/superadmin/'),
+        	__DIR__.'/js' => base_path('public/js/superadmin/'),
+        	__DIR__.'/img' => base_path('public/img/superadmin/')
     	]);
 	}
 

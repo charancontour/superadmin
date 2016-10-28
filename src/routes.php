@@ -3,7 +3,7 @@
 Route::get('superadmin/users',['uses'=>'SuperAdmin\SuperAdminController@usersget']);
 Route::get('superadmin/deactivatedusers',['uses'=>'SuperAdmin\SuperAdminController@deactivatedusers']);
 Route::get('superadmin/index',function(){
-  return view('vendor.superadmin.index');
+  return view('vendor.superadmin.layout');
 });
 Route::post('superadmin/createuser',['uses'=>'SuperAdmin\SuperAdminController@usercreate']);
 Route::post('superadmin/updateuser',['uses'=>'SuperAdmin\SuperAdminController@userupdate']);
