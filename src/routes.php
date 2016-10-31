@@ -19,3 +19,4 @@ Route::get('superadmin/locationusers/{location_id}',['uses'=>'SuperAdmin\SuperAd
 Route::get('superadmin/groupusers/{group_id}',['uses'=>'SuperAdmin\SuperAdminController@groupusers']);
 Route::post('superadmin/assignusertogroup',['uses'=>'SuperAdmin\SuperAdminController@assignusertogroup']);
 Route::post('superadmin/removeuserfromgroup',['uses'=>'SuperAdmin\SuperAdminController@removeuserfromgroup']);
+Route::get('superadmin/usersgroup',['uses'=>'SuperAdmin\SuperAdminController@getallgroupusers']);
