@@ -1,4 +1,9 @@
 <?php
+Route::get('testgroup',function(){
+
+  return App\Group::with('test')->get();
+   return App\Group::find(1)->with('groupUsers')->get();
+});
 //User Routes.
 Route::get('superadmin/users',['uses'=>'SuperAdmin\SuperAdminController@usersget']);
 Route::get('superadmin/deactivatedusers',['uses'=>'SuperAdmin\SuperAdminController@deactivatedusers']);
@@ -20,6 +25,8 @@ Route::get('superadmin/groupusers/{group_id}',['uses'=>'SuperAdmin\SuperAdminCon
 Route::post('superadmin/assignusertogroup',['uses'=>'SuperAdmin\SuperAdminController@assignusertogroup']);
 Route::post('superadmin/removeuserfromgroup',['uses'=>'SuperAdmin\SuperAdminController@removeuserfromgroup']);
 Route::get('superadmin/usersgroup',['uses'=>'SuperAdmin\SuperAdminController@getallgroupusers']);
+Route::get('superadmin/grouplist',['uses'=>'SuperAdmin\SuperAdminController@grouplist']);
+
 
 //Role Routes.
 Route::get('superadmin/rolelist',['uses'=>'SuperAdmin\SuperAdminController@rolelist']);

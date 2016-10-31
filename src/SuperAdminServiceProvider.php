@@ -12,6 +12,7 @@ class SuperAdminServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->publishes([
+					__DIR__.'/config/superadmin.php' => config_path('superadmin.php'),
         	__DIR__.'/views' => base_path('resources/views/vendor/superadmin/'),
         	__DIR__.'/css' => base_path('public/css/superadmin/'),
         	__DIR__.'/js' => base_path('public/js/superadmin/'),
