@@ -189,8 +189,18 @@ class SuperAdminController extends Controller {
 
   public function groupusers($group_id)
   {
-    $groupUsers = Group::findOrFail($group_id)->groupUsers;
-    $usersNotInGroup = Group::findOrFail($group_id)->usersNotInGroup()->get();
+    $group = Group::find($group_id);
+    if(!$group){
+      return "Given group Id is wrong";
+    }
+    $groupUsers = Group::find($group_id)->groupUsers;
+    if(!$groupUsers){
+      $groupUsers = [];
+    }
+    $usersNotInGroup = Group::findOrFail($group_id)->usersNotInGroup();
+    if(!$usersNotInGroup){
+      $usersNotInGroup = [];
+    }
     $result = ['users_in_group'=>$groupUsers,'users_not_in_group'=>$usersNotInGroup];
     return response()->json($result);
   }
