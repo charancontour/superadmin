@@ -189,7 +189,9 @@ class SuperAdminController extends Controller {
 
   public function groupusers($group_id)
   {
-    $result = Group::findOrFail($group_id)->groupUsers;
+    $groupUsers = Group::findOrFail($group_id)->groupUsers;
+    $usersNotInGroup = Group::findOrFail($group_id)->usersNotInGroup()->get();
+    $result = ['users_in_group'=>$groupUsers,'users_not_in_group'=>$usersNotInGroup];
     return response()->json($result);
   }
 
@@ -247,6 +249,15 @@ class SuperAdminController extends Controller {
 		}
 		return redirect()->back();
   }
-
+  public function grouplist()
+  {
+    $result = Group::all();
+    return response()->json($result);
+  }
+  public function rolelist()
+  {
+      $result = Role::users();
+      return response()->json($result);
+  }
 
 }
