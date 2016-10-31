@@ -1,8 +1,8 @@
 var users = awake.users;
 
-var userTable = drawTable(users);
+var userListTable = document.getElementById('userListTable');
 
-var userListId = document.getElementById('userListTable');
+var userTable = drawTable(users);
 
 function drawTable(data)
 {
@@ -64,7 +64,9 @@ function drawTable(data)
 
 	var uTable = document.getElementById('user-table');
 	
-	$(uTable).dataTable();
+	$(uTable).dataTable({
+		"columnDefs": [{"targets":[2], "orderable": "false"}]
+	});
 	
 }
 

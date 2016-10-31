@@ -151,8 +151,8 @@ class SuperAdminController extends Controller {
   }
 
   public function locationlist(){
-    $locations = Location::all();
-    return response()->json($locations);
+    JavaScript::put(['locations' => Location::all()]);
+    return view('vendor.superadmin.locations');
   }
 
   public function createlocation(Request $request){
