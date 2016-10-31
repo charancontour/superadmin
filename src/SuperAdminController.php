@@ -151,8 +151,8 @@ class SuperAdminController extends Controller {
   }
 
   public function locationlist(){
-    $locations = Location::all();
-    return response()->json($locations);
+    JavaScript::put(['locations' => Location::all()]);
+    return view('vendor.superadmin.locations');
   }
 
   public function createlocation(Request $request){
@@ -207,8 +207,8 @@ class SuperAdminController extends Controller {
 
   public function getallgroupusers()
   {
-    $result = Group::with('groupUsers')->get();
-    return response()->json($result);
+    JavaScript::put(['group_users' => Group::with('groupUsers')->get()]);
+    return view('vendor.superadmin.groupusers');
   }
 
   public function assignusertogroup(Request $request)

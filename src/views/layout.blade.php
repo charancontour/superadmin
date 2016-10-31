@@ -31,12 +31,12 @@
         <!-- /logo -->
 
         <!-- toggle small sidebar menu -->
-        <a href="javascript:;" class="toggle-sidebar hidden-xs hamburger-icon v3" data-toggle="layout-small-menu">
+        <!-- <a href="javascript:;" class="toggle-sidebar hidden-xs hamburger-icon v3" data-toggle="layout-small-menu">
           <span></span>
           <span></span>
           <span></span>
           <span></span>
-        </a>
+        </a> -->
         <!-- /toggle small sidebar menu -->
 
       </div>
@@ -46,16 +46,16 @@
 
       <ul class="nav">
     <li>
-        <a href="index.html"> <i class="fa fa-flask"></i> <span>Dashboard</span> </a>
+        <a href="/superadmin/users"> <i class="fa fa-flask"></i> <span>Dashboard</span> </a>
     </li>
     <li class="menu-accordion">
-        <a href="javascript:;"> <i class="fa fa-toggle-on"></i> <span>Branches</span> </a>
+        <a href="/superadmin/locationlist"> <i class="fa fa-toggle-on"></i> <span>Locations</span> </a>
     </li>
     <li class="menu-accordion">
-        <a href="javascript:;"> <i class="fa fa-tint"></i> <span>Groups</span> </a>
+        <a href="/superadmin/usersgroup"> <i class="fa fa-tint"></i> <span>Groups</span> </a>
     </li>
     <li class="menu-accordion">
-        <a href="javascript:;"> <i class="fa fa-tag"></i> <span>Users</span> </a>
+        <a href="/superadmin/users"> <i class="fa fa-tag"></i> <span>Users</span> </a>
     </li>
     <li class="menu-accordion">
         <a href="javascript:;"> <i class="fa fa-pie-chart"></i> <span>Graphs</span> </a>
@@ -172,10 +172,21 @@
 
   <!-- Script Tags  -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
-  <!-- // <script src="{{asset('js/superadmin/dashboard.js')}}"></script> -->
+  <!-- // <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script> -->
+  <script src="{{asset('js/superadmin/dataTables.js')}}"></script>
+  <script src="{{asset('js/superadmin/bootstrap-dataTables.js')}}"></script>
+  <script src="{{asset('js/superadmin/dashboard.js')}}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"></script>
-  <script src="{{asset('js/superadmin/main.js')}}"></script>
+  <!-- Page Level Scripts -->
+  @if(Request::segment(2) == "users")
+    <script src="{{asset('js/superadmin/user.js')}}"></script>
+  @endif
+  @if(Request::segment(2) == "usersgroup")
+    <script src="{{asset('js/superadmin/groups.js')}}"></script>
+  @endif
+   @if(Request::segment(2) == "locationlist")
+    <script src="{{asset('js/superadmin/location.js')}}"></script>
+  @endif
 </body>
 
 </html>

@@ -1,13 +1,14 @@
 @extends('vendor.superadmin.layout')
 @section('content')
 <div class="panel">
-    <div class="panel-heading border">
-        <ol class="breadcrumb mb0 no-padding">
-            <li> <a href="/superadmin/users">Home</a> </li>
-            <li class="active">Users</li>
+	<!-- Panel Header -->
+	<div class="panel-heading border">
+		<ol class="breadcrumb mb0 no-padding">
+            <li><a href="/superadmin/users">Home</a></li>
+            <li class="active">Locations</li>
         </ol>
         <div class="pull-right">
-        	<button type="button" class="btn btn-warning" style="width:200px;margin-top:-2em" data-toggle="modal" data-target=".create-user" data-dismiss="modal">Create User</button>
+        	<button type="button" class="btn btn-warning" style="width:200px;margin-top:-2em" data-toggle="modal" data-target=".add-location" data-dismiss="modal">Add Location</button>
         </div>
         <br/>
         @if (count($errors) > 0)
@@ -20,10 +21,54 @@
 				</ul>
 			</div>
 		@endif
+	</div>
+	<!-- Panel Body -->
+    <div class="panel-body" id="locationsTable">
+
     </div>
+</div>
 
-    <div class="panel-body" id="userListTable">
+<!-- Modal PoP Up for Add Location -->
+<div class="modal bs-modal-sm add-location" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title">Add Location</h4>
+        </div>
+        <div class="modal-body">
+	        <form class="form-horizontal" role="form" method="POST" action="{{ url('/superadmin/createlocation') }}">
+	        	<input type="hidden" name="_token" value="{{ csrf_token() }}">
+                
+	            <div class="form-group">
+					<label class="col-md-4 control-label">Add Location</label>
+					<div class="col-md-6">
+						<input type="text" class="form-control" name="location_name" id="payroll-number" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-6 col-md-offset-4">
+						<button type="submit" class="btn btn-primary">Add Location</button>
+					</div>
+				</div>
+			</form>
+       	</div>
+      </div>
+    </div>
+  </div>
 
+<!-- Modal PoP Up for Get Users for a Location -->
+<div class="modal bs-modal-sm get-users" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title">Users for the Location</h4>
+        </div>
+        <div class="modal-body">
+	       
+       	</div>
+      </div>
     </div>
 </div>
 
@@ -103,74 +148,5 @@
        	</div>
       </div>
     </div>
-  </div>
-
-<!-- Modal PoPUP for Create User -->
-<!-- Modal PoPUp -->
-<div class="modal bs-modal-sm create-user" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h4 class="modal-title">Create User</h4>
-        </div>
-        <div class="modal-body">
-        	<form class="form-horizontal" role="form" method="POST" action="{{ url('/superadmin/createuser') }}">
-      				<input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <div class="form-group">
-      							<label class="col-md-4 control-label">Payroll Number</label>
-      							<div class="col-md-6">
-      								<input type="text" class="form-control" required name="login" value="{{ old('login') }}">
-      							</div>
-      			    </div>
-                  	<div class="form-group">
-						<label class="col-md-4 control-label">Firstname</label>
-						<div class="col-md-6">
-							<input type="text" class="form-control" required name="firstname" value="{{ old('firstname') }}">
-						</div>
-					</div>
-	                <div class="form-group">
-						<label class="col-md-4 control-label">Lastname</label>
-						<div class="col-md-6">
-							<input type="text" class="form-control" required name="lastname" value="{{ old('lastname') }}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-4 control-label">E-Mail Address</label>
-						<div class="col-md-6">
-							<input type="email" class="form-control" required name="email" value="{{ old('email') }}">
-						</div>
-					</div>
-                    <div class="form-group">
-          							<label class="col-md-4 control-label">Location</label>
-          							<div class="col-md-6">
-	                      <select class="form-control" name="location_id" required>
-	                        @foreach(App\Location::all() as $location)
-	                          <option value={{$location->id}}>{{$location->location_name}}</option>
-	                        @endforeach
-	                      </select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-4 control-label">Password</label>
-						<div class="col-md-6">
-							<input type="password" required class="form-control" name="password">
-						</div>
-					</div>
-                    <div class="form-group">
-					<label class="col-md-4 control-label">Confirm Password</label>
-						<div class="col-md-6">
-							<input type="password" required class="form-control" name="confirm-password">
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-6 col-md-offset-4">
-							<button type="submit" class="btn btn-primary">Create Student</button>
-						</div>
-					</div>
-  			</form>
-        </div>
-      </div>
-    </div>
-  </div>	
+</div>
 @endsection
