@@ -193,6 +193,12 @@ class SuperAdminController extends Controller {
     return response()->json($result);
   }
 
+  public function getallgroupusers()
+  {
+    $result = Group::with('groupUsers')->get();
+    return response()->json($result);
+  }
+
   public function assignusertogroup(Request $request)
   {
     $this->validate($request, [
