@@ -195,8 +195,8 @@ class SuperAdminController extends Controller {
 
   public function getallgroupusers()
   {
-    $result = Group::with('groupUsers')->get();
-    return response()->json($result);
+    JavaScript::put(['group_users' => Group::with('groupUsers')->get()]);
+    return view('vendor.superadmin.groupusers');
   }
 
   public function assignusertogroup(Request $request)
