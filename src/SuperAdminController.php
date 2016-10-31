@@ -14,7 +14,7 @@ use App\Group;
 use Hash;
 use Auth;
 use Config;
-
+use JavaScript;
 
 class SuperAdminController extends Controller {
 
@@ -27,8 +27,8 @@ class SuperAdminController extends Controller {
 	}
 
   public function usersget(){
-    $users = User::all();
-    return response()->json($users);
+    JavaScript::put(['users' => User::all()]);
+    return view('vendor.superadmin.user-list');
   }
 
   public function deactivatedusers()
@@ -41,7 +41,7 @@ class SuperAdminController extends Controller {
 	public function usercreate(Request $request){
     $input = $request->all();
     $this->validate($request, [
-        'login' => 'required',
+        'login' => 'required|unique',
         'firstname' => 'required',
         'lastname' =>'required',
         'email'=>'required|unique:users',
@@ -152,7 +152,7 @@ class SuperAdminController extends Controller {
 
   public function locationlist(){
     $locations = Location::all();
-    return response()->json($users);
+    return response()->json($locations);
   }
 
   public function createlocation(Request $request){
