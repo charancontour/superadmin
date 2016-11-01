@@ -11,7 +11,8 @@
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
   <!-- build:css({.tmp,app}) styles/app.min.css -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+  <!-- <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"> -->
+  <link rel="stylesheet" type="text/css" href="{{asset('css/superadmin/dataTables.min.css')}}">
   <!-- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
   <link rel="stylesheet" href="{{asset('css/superadmin/dashboard.css')}}">
 </head>
@@ -48,16 +49,19 @@
     <li>
         <a href="/superadmin/users"> <i class="fa fa-flask"></i> <span>Dashboard</span> </a>
     </li>
-    <li class="menu-accordion">
+    <li>
         <a href="/superadmin/locationlist"> <i class="fa fa-toggle-on"></i> <span>Locations</span> </a>
     </li>
-    <li class="menu-accordion">
+    <li>
         <a href="/superadmin/usersgroup"> <i class="fa fa-tint"></i> <span>Groups</span> </a>
     </li>
-    <li class="menu-accordion">
+    <li>
         <a href="/superadmin/users"> <i class="fa fa-tag"></i> <span>Users</span> </a>
     </li>
-    <li class="menu-accordion">
+    <li>
+        <a href="/superadmin/rolelist"> <i class="fa fa-users"></i> <span>Roles</span> </a>
+    </li>
+    <li>
         <a href="javascript:;"> <i class="fa fa-pie-chart"></i> <span>Graphs</span> </a>
     </li>
     <li class="menu-accordion">
@@ -171,12 +175,14 @@
   </div>
 
   <!-- Script Tags  -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <!-- // <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+  <script src="{{asset('js/jquery.min.js')}}"></script>
   <!-- // <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script> -->
+  <script src="{{asset('js/superadmin/bootstrap.min.js')}}"></script>
   <script src="{{asset('js/superadmin/dataTables.js')}}"></script>
   <script src="{{asset('js/superadmin/bootstrap-dataTables.js')}}"></script>
   <script src="{{asset('js/superadmin/dashboard.js')}}"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"></script>
+  <!-- // <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"></script> -->
   <!-- Page Level Scripts -->
   @if(Request::segment(2) == "users")
     <script src="{{asset('js/superadmin/user.js')}}"></script>

@@ -33,7 +33,7 @@
           <h4 class="modal-title">Users for the Group</h4>
         </div>
         <div class="modal-body">
-	       
+           
        	</div>
       </div>
     </div>

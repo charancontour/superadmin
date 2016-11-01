@@ -34,6 +34,7 @@ class SuperAdminController extends Controller {
   public function deactivatedusers()
   {
     $users = User::onlyTrashed()->get();
+    // return view('vendor.superadmin.deactivatedusers',$users);
     return response()->json($users);
   }
 
@@ -41,7 +42,7 @@ class SuperAdminController extends Controller {
 	public function usercreate(Request $request){
     $input = $request->all();
     $this->validate($request, [
-        'login' => 'required|unique',
+        'login' => 'required|unique:users',
         'firstname' => 'required',
         'lastname' =>'required',
         'email'=>'required|unique:users',
@@ -65,12 +66,12 @@ class SuperAdminController extends Controller {
       if($result_branch->success){
         $user = User::create($input);
       }else{
-        return redirect()->back()->withErrors(['unable to create user']);
+        return redirect()->back()->withErrors(['Unable to create user.']);
       }
     }else{
-      return redirect()->back()->withErrors(['unable to create user']);
+      return redirect()->back()->withErrors(['Unable to create user.']);
     }
-    \Session::flash('flash_message','Student Created Successfully');
+    \Session::flash('success_message','Student Created Successfully');
     return redirect()->back();
 
   }
@@ -115,7 +116,7 @@ class SuperAdminController extends Controller {
     }else{
       return redirect()->back()->withErrors(['unable to create user']);
     }
-    \Session::flash('flash_message','Student Updated Successfully');
+    \Session::flash('success_message','Student Updated Successfully');
     return redirect()->back();
 
   }
@@ -127,10 +128,10 @@ class SuperAdminController extends Controller {
     if($result->success){
       $user->delete();
     }else{
-      \Session::flash('flash_message','Student not update, please contact the support team.');
+      \Session::flash('fail_message','Student not update, please contact the support team.');
       return redirect()->back();
     }
-    \Session::flash('flash_message','Student deactivated Successfully');
+    \Session::flash('success_message','Student deactivated Successfully');
     return redirect()->back();
 
   }
@@ -141,12 +142,12 @@ class SuperAdminController extends Controller {
 		$result = json_decode($this->efront->ActivateUser($user->efront_user_id));
 		if($result->success){
 			$user=User::onlyTrashed()->where('id',$id)->restore();
-			\Session::flash('flash_message','Student has been Activated Successfully');
+			\Session::flash('success_message','Student has been Activated Successfully');
 		}
 		else{
-			\Session::flash('flash_message','Student has not been Activated');
+			\Session::flash('fail_message','Student has not been Activated');
 		}
-		return redirect('deactivatedstudents');
+		return redirect()->back();
 
   }
 
@@ -173,9 +174,9 @@ class SuperAdminController extends Controller {
       $new_location = new Location;
       $new_location->location_name = $branch_input['name'];
       $new_location->save();
-      \Session::flash('flash_message','Location created Successfully');
+      \Session::flash('success_message','Location created Successfully');
     }else{
-      \Session::flash('flash_message','Location not created, Contact support team.');
+      \Session::flash('fail_message','Location not created, Contact support team.');
     }
 
     return redirect()->back();
@@ -225,10 +226,10 @@ class SuperAdminController extends Controller {
 		if($result->success){
 			$user = User::find($input['user_id']);
 			$user->usergroups()->attach($input['group_id']);
-			\Session::flash('flash_message','Student is Assigned to '.$group->group_name);
+			\Session::flash('success_message','Student is Assigned to '.$group->group_name);
 		}
 		else{
-			\Session::flash('flash_message','Student has NOT been Assigned to '.$group->group_name);
+			\Session::flash('fail_message','Student has NOT been Assigned to '.$group->group_name);
 		}
 		return redirect()->back();
   }
@@ -245,17 +246,17 @@ class SuperAdminController extends Controller {
 		$group_user = Group::findOrFail($input['group_id'])->groupUsers()->where('users.id',$user->id)->first();
     $group = Group::findOrFail($input['group_id']);
     if(!$group_user){
-      \Session::flash('flash_message','Student is not assigned to '.$group->group_name);
+      \Session::flash('fail_message','Student is not assigned to '.$group->group_name);
       return redirect()->back()->withErrors(["Student is not assigned to $group->group_name"]);
     }
     $result = json_decode($this->efront->RemoveUserFromGroup($user->efront_user_id,$group->efront_group_id));
     if($result->success){
 			$user = User::find($input['user_id']);
 			$user->usergroups()->detach($input['group_id']);
-			\Session::flash('flash_message','Student is Removed from '.$group->group_name);
+			\Session::flash('success_message','Student is Removed from '.$group->group_name);
 		}
 		else{
-			\Session::flash('flash_message','Student has NOT been Removed from'.$group->group_name);
+			\Session::flash('fail_message','Student has NOT been Removed from'.$group->group_name);
 		}
 		return redirect()->back();
   }
@@ -266,7 +267,7 @@ class SuperAdminController extends Controller {
   }
   public function rolelist()
   {
-      $result = Role::users();
+      $result = Role::orderBy('role')->get();
       return response()->json($result);
   }
 
