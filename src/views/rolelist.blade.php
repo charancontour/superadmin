@@ -38,7 +38,7 @@
           <h4 class="modal-title">Add Role</h4>
         </div>
         <div class="modal-body">
-	        <form class="form-horizontal" role="form" method="POST" action="{{ url('/superadmin/addrole') }}">
+	        <form class="form-horizontal" role="form" method="POST" action="{{ url('/superadmin/rolestore') }}">
 	        	<input type="hidden" name="_token" value="{{ csrf_token() }}">
                 
 	            <div class="form-group">
