@@ -15,6 +15,7 @@ use Hash;
 use Auth;
 use Config;
 use JavaScript;
+use Queue;
 
 class SuperAdminController extends Controller {
 
@@ -41,7 +42,7 @@ class SuperAdminController extends Controller {
 	public function usercreate(Request $request){
     $input = $request->all();
     $this->validate($request, [
-        'login' => 'required|unique',
+        'login' => 'required|unique:users',
         'firstname' => 'required',
         'lastname' =>'required',
         'email'=>'required|unique:users',
@@ -79,10 +80,10 @@ class SuperAdminController extends Controller {
     $input = $request->all();
     $user  = User::findOrFail($input['user_id']);
     $this->validate($request, [
-        'login' => 'required',
+        'login' => 'required|unique:users,login,'.$user->id,
         'firstname' => 'required',
         'lastname' =>'required',
-        'email'=>'required|unique:users,login,'.$user->id,
+        'email'=>'required|unique:users,email,'.$user->id,
         'location_id'=>'required|exists:locations,id',
         'confirm-password'=>'same:password'
     ]);
@@ -266,8 +267,60 @@ class SuperAdminController extends Controller {
   }
   public function rolelist()
   {
-      $result = Role::users();
+      $result = Role::all();
       return response()->json($result);
+  }
+  public function rolegroups()
+  {
+    $result = Role::with('groups')->get();
+  }
+  public function rolestore(Request $request)
+  {
+    $this->validate($request, [
+        'role_name' => 'required|unique:roles,role_name',
+    ]);
+    $input = $request->all();
+    $role = Role::create(['role_name'=>$input['role_name']]);
+    return redirect()->back();
+  }
+  public function assginrolegroup(Request $request)
+  {
+    $this->validate($request,[
+          'role_id' => 'required|unique:roles,id',
+          'group_id'=> 'required|unique:groups,id'
+      ]);
+    $input = $request->all();
+    $role = Role::findOrFail($input['role_id']);
+    $group = Group::findOrFail($input['group_id']);
+    $role_groups = $role->groups()->where('id',$input['group_id'])->get();
+    if(!empty($role_groups)){
+      return redirect()->back()->withErrors(["group is already assigned with the role"]);
+    }
+    $role->groups()->attach($input['group_id']);
+    $role_users = $role->users()->get();
+    foreach($role_users as $role_user){
+      Queue::push(new userAssignToGroup(['efront_user_id'=>$role_user->efront_user_id,'efront_group_id'=>$group->efront_group_id]));
+      $role_user->groups()->attach($group->id);
+    }
+    return redirect()->back();
+  }
+
+  public function removerolegroup(Request $request)
+  {
+    $this->validate($request,[
+      'role_id'=>'required|unique:roles,id',
+      'group_id'=> 'required|unique:groups,id'
+    ]);
+    $input = $request->all();
+    $role = Role::findOrFail($input['role_id']);
+    $group = Role::findOrFail($input['group_id']);
+    $role->groups()->detach($input['group_id']);
+    $role_users = $role->users()->get();
+    foreach($role_users as $role_user){
+      Queue::push(new userRemoveFromGroup(['efront_user_id'=>$role_user->efront_user_id,'efront_group_id'=>$group->efront_group_id]));
+      $role_user->group()->detach($group->id);
+    }
+    return redirect()->back();
   }
 
 }
