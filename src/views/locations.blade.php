@@ -48,7 +48,7 @@
 				</div>
 				<div class="form-group">
 					<div class="col-md-6 col-md-offset-4">
-						<button type="submit" class="btn btn-primary">Add Location</button>
+						<button type="submit" class="btn btn-primary btn-block">Add Location</button>
 					</div>
 				</div>
 			</form>

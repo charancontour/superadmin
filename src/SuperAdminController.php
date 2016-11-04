@@ -268,8 +268,8 @@ class SuperAdminController extends Controller {
   }
   public function rolelist()
   {
-    $result = Role::orderBy('role')->get();
-    return response()->json($result);
+    JavaScript::put(['roles' => Role::orderBy('role')->get()]);
+    return view('vendor.superadmin.rolelist');
   }
   public function rolegroups()
   {
