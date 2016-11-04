@@ -271,17 +271,21 @@ class SuperAdminController extends Controller {
     $result = Role::orderBy('role')->get();
     return response()->json($result);
   }
-  public function rolegroups()
+  public function rolegroups($role_id)
   {
-    $result = Role::with('groups')->get();
+    $role = Role::findOrFail($role_id);
+    $groups_in_role = $role->groups()->get();
+    $groups_not_in_role = $role->groupsNotInRole();
+    return response()->json(['groups_in_role'=>$groups_in_role,'groups_not_in_role'=>$groups_not_in_role]);
+
   }
   public function rolestore(Request $request)
   {
     $this->validate($request, [
-        'role_name' => 'required|unique:roles,role_name',
+        'role_name' => 'required|unique:roles,role',
     ]);
     $input = $request->all();
-    $role = Role::create(['role_name'=>$input['role_name']]);
+    $role = Role::create(['role'=>$input['role_name']]);
     return redirect()->back();
   }
   public function assginrolegroup(Request $request)

@@ -31,3 +31,7 @@ Route::get('superadmin/grouplist',['uses'=>'SuperAdmin\SuperAdminController@grou
 
 //Role Routes.
 Route::get('superadmin/rolelist',['uses'=>'SuperAdmin\SuperAdminController@rolelist']);
+Route::get('superadmin/rolegroups/{role_id}',['uses'=>'SuperAdmin\SuperAdminController@rolegroups']);
+Route::post('superadmin/rolestore',['uses'=>'SuperAdmin\SuperAdminController@rolestore']);
+Route::post('superadmin/assginrolegroup',['uses'=>'SuperAdmin\SuperAdminController@assginrolegroup']);
+Route::post('superadmin/removerolegroup',['uses'=>'SuperAdmin\SuperAdminController@removerolegroup']);
