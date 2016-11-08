@@ -6,6 +6,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldBeQueued;
+use App\Dalata\Repositories\EfrontApiRepository;
 
 class userAssignToGroup extends Command implements SelfHandling, ShouldBeQueued {
 
@@ -29,7 +30,7 @@ class userAssignToGroup extends Command implements SelfHandling, ShouldBeQueued 
 	 */
 	public function handle()
 	{
-		$efront  = new App\Dalata\Repositories\EfrontApiRepository;
+		$efront  = new EfrontApiRepository;
 		$result = json_decode($efront->AddUserToGroup($this->input['efront_user_id'],$this->input['efront_group_id']));
 	}
 
