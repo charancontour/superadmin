@@ -169,7 +169,7 @@ function drawUsersRoleTable(data,role_id)
 		var tr = document.createElement('tr');
 		
 		var td = document.createElement('td');
-			td.innerHTML = data[i].first_name+' '+data[i].first_name;
+			td.innerHTML = data[i].firstname+' '+data[i].lastname;
 			td.setAttribute('style','text-transform:capitalize');
 		tr.appendChild(td);	
 
