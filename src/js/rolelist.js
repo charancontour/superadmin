@@ -148,7 +148,7 @@ function drawUsersRoleTable(data,role_id)
 		
 	var theader = document.createElement('tr');
 
-	var colNames = ['Name','Actions'];
+	var colNames = ['Name','Login','Email','Actions'];
 
 	for(var i=0; i < colNames.length; i++)			
 	{
@@ -172,6 +172,16 @@ function drawUsersRoleTable(data,role_id)
 			td.innerHTML = data[i].first_name+' '+data[i].first_name;
 			td.setAttribute('style','text-transform:capitalize');
 		tr.appendChild(td);	
+
+		var td = document.createElement('td');
+			td.innerHTML = data[i].login;
+			td.setAttribute('style','text-transform:capitalize');
+		tr.appendChild(td);
+
+		var td = document.createElement('td');
+			td.innerHTML = data[i].email;
+			td.setAttribute('style','text-transform:capitalize');
+		tr.appendChild(td);
 
 		var user_id = data[i].id;
 
