@@ -51,7 +51,7 @@ class SuperAdminController extends Controller {
         'password'=>'required',
         'confirm-password'=>'required|same:password'
     ]);
-    
+
     if(is_numeric($input['login'])){
       $input['login'] = Config::get('efront.LoginPrefix') . $input['login'];
     }
@@ -287,6 +287,7 @@ class SuperAdminController extends Controller {
     ]);
     $input = $request->all();
     $role = Role::create(['role'=>$input['role_name']]);
+    \Session::flash('success_message','Role is Successfully created');
     return redirect()->back();
   }
   public function assignrolegroup(Request $request)
@@ -306,8 +307,9 @@ class SuperAdminController extends Controller {
     $role_users = $role->users()->get();
     foreach($role_users as $role_user){
       Queue::push(new userAssignToGroup(['efront_user_id'=>$role_user->efront_user_id,'efront_group_id'=>$group->efront_group_id]));
-      $role_user->groups()->attach($group->id);
+      $role_user->usersgroups()->attach($group->id);
     }
+    \Session::flash('success_message','Group is assigned to the role');
     return redirect()->back();
   }
 
@@ -324,8 +326,60 @@ class SuperAdminController extends Controller {
     $role_users = $role->users()->get();
     foreach($role_users as $role_user){
       Queue::push(new userRemoveFromGroup(['efront_user_id'=>$role_user->efront_user_id,'efront_group_id'=>$group->efront_group_id]));
-      $role_user->group()->detach($group->id);
+      $role_user->usergroups()->detach($group->id);
     }
+    \Session::flash('success_message','Group is removed from the role');
+    return redirect()->back();
+  }
+
+  public function roleusers($role_id)
+  {
+    $role = Role::findOrFail($role_id);
+    $users_in_role = $role->users;
+    $users_not_in_role = $role->usersNotInRole();
+    return response()->json(['users_in_role'=>$users_in_role,'users_not_in_role'=>$users_not_in_role]);
+  }
+
+  public function assignroleuser(Request $request){
+    $this->validate($request,[
+      'role_id'=>'required|exists:roles,id',
+      'user_id'=> 'required|exists:users,id'
+    ]);
+    $input = $request->all();
+    $role = Role::findOrFail($input['role_id']);
+    $user = User::findOrFail($input['user_id']);
+    $user_groups = $user->usergroups;
+    foreach($user_groups as $group){
+      Queue::push(new userRemoveFromGroup(['efront_user_id'=>$user->efront_user_id,'efront_group_id'=>$group->efront_group_id]));
+      $user->usergroups()->detach($group->id);
+    }
+    $user->role_id = $role->id;
+    $user->save();
+    $role_groups = $role->groups;
+    foreach($role_groups as $group){
+      Queue::push(new userAssignToGroup(['efront_user_id'=>$user->efront_user_id,'efront_group_id'=>$group->efront_group_id]));
+      $user->usergroups()->attach($group->id);
+    }
+    \Session::flash('success_message','User is assigned to the role');
+    return redirect()->back();
+  }
+
+  public function removeroleuser(Request $request){
+    $this->validate($request,[
+      'role_id'=>'required|exists:roles,id',
+      'user_id'=> 'required|exists:users,id'
+    ]);
+    $input = $request->all();
+    $role = Role::findOrFail($input['role_id']);
+    $user = User::findOrFail($input['user_id']);
+    $user_groups = $user->usergroups;
+    foreach($user_groups as $group){
+      Queue::push(new userRemoveFromGroup(['efront_user_id'=>$user->efront_user_id,'efront_group_id'=>$group->efront_group_id]));
+      $user->usergroups()->detach($group->id);
+    }
+    $user->role_id = $this->student_role_id;
+    $user->save();
+    \Session::flash('success_message',"User is removed from the role $role->role and assigned to Student Role");
     return redirect()->back();
   }
 
