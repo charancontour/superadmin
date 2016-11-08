@@ -51,6 +51,7 @@ class SuperAdminController extends Controller {
         'password'=>'required',
         'confirm-password'=>'required|same:password'
     ]);
+    
     if(is_numeric($input['login'])){
       $input['login'] = Config::get('efront.LoginPrefix') . $input['login'];
     }
@@ -288,17 +289,17 @@ class SuperAdminController extends Controller {
     $role = Role::create(['role'=>$input['role_name']]);
     return redirect()->back();
   }
-  public function assginrolegroup(Request $request)
+  public function assignrolegroup(Request $request)
   {
     $this->validate($request,[
-          'role_id' => 'required|unique:roles,id',
-          'group_id'=> 'required|unique:groups,id'
+          'role_id' => 'required|exists:roles,id',
+          'group_id'=> 'required|exists:groups,id'
       ]);
     $input = $request->all();
     $role = Role::findOrFail($input['role_id']);
     $group = Group::findOrFail($input['group_id']);
-    $role_groups = $role->groups()->where('id',$input['group_id'])->get();
-    if(!empty($role_groups)){
+    $role_groups = $role->groups()->where('group_id',$input['group_id'])->get();
+    if(!$role_groups){
       return redirect()->back()->withErrors(["group is already assigned with the role"]);
     }
     $role->groups()->attach($input['group_id']);
@@ -313,8 +314,8 @@ class SuperAdminController extends Controller {
   public function removerolegroup(Request $request)
   {
     $this->validate($request,[
-      'role_id'=>'required|unique:roles,id',
-      'group_id'=> 'required|unique:groups,id'
+      'role_id'=>'required|exists:roles,id',
+      'group_id'=> 'required|exists:groups,id'
     ]);
     $input = $request->all();
     $role = Role::findOrFail($input['role_id']);
