@@ -6,6 +6,8 @@ var groupTable = drawGroupTable(groups);
 
 function drawGroupTable(data)
 {
+	groupsWrapper.innerHTML = '';
+	
 	var table = document.createElement('table');
 		table.setAttribute('class','table table-bordered bordered table-striped table-condensed')
 		table.setAttribute('id','groups-table');
