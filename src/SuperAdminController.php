@@ -25,6 +25,7 @@ class SuperAdminController extends Controller {
   public function __construct(EfrontApiInterface $efront)
 	{
 		$this->efront = $efront;
+    $this->middleware('superadmin');
 	}
 
   public function usersget(){
