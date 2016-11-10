@@ -64,6 +64,9 @@ class SuperAdminController extends Controller {
         return redirect()->back()->withErrors(['Unable to find Location.']);
       }
       $branch = branch::find($Admin_user->branch_id);
+      if($branch->efront_branch_id === 0){
+        return redirect()->back()->withErrors(['Location is not in efront.']);
+      }
     }
     $input['branch_id'] = $branch->id;
     $input['role_id'] = $this->student_role_id;
@@ -102,6 +105,16 @@ class SuperAdminController extends Controller {
     $input['user_status_id'] = $this->active_status_id;
     $location = Location::findOrFail($input['location_id']);
     $branch = branch::where('efront_branch_name',$location->location_name)->first();
+    if(!$branch){
+      $Admin_user = User::where('location_id',$input['location_id'])->where('role_id',2)->first();
+      if(!$Admin_user){
+        return redirect()->back()->withErrors(['Unable to find Location.']);
+      }
+      $branch = branch::find($Admin_user->branch_id);
+      if($branch->efront_branch_id === 0){
+        return redirect()->back()->withErrors(['Location is not in efront.']);
+      }
+    }
     $input['branch_id'] = $branch->id;
     $result = json_decode($this->efront->EditUser($user->efront_user_id,$input));
 
