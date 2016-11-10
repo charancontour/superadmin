@@ -58,6 +58,13 @@ class SuperAdminController extends Controller {
     $input['user_status_id'] = $this->active_status_id;
     $location = Location::find($input['location_id']);
     $branch = branch::where('efront_branch_name',$location->location_name)->first();
+    if(!$branch){
+      $Admin_user = User::where('location_id',$input['location_id'])->where('role_id',2)->first();
+      if(!$Admin_user){
+        return redirect()->back()->withErrors(['Unable to find Location.']);
+      }
+      $branch = branch::find($Admin_user->branch_id);
+    }
     $input['branch_id'] = $branch->id;
     $input['role_id'] = $this->student_role_id;
     $result = json_decode($this->efront->CreateUser($input));
