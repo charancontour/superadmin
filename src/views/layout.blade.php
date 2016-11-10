@@ -49,16 +49,16 @@
     <li>
         <a href="/superadmin/users"> <i class="fa fa-flask"></i> <span>Dashboard</span> </a>
     </li>
-    <li>
+    <!-- <li>
         <a href="/superadmin/locationlist"> <i class="fa fa-toggle-on"></i> <span>Locations</span> </a>
     </li>
     <li>
         <a href="/superadmin/usersgroup"> <i class="fa fa-tint"></i> <span>Groups</span> </a>
-    </li>
+    </li> -->
     <li>
         <a href="/superadmin/users"> <i class="fa fa-tag"></i> <span>Users</span> </a>
     </li>
-    <li>
+   <!--  <li>
         <a href="/superadmin/rolelist"> <i class="fa fa-users"></i> <span>Roles</span> </a>
     </li>
     <li>
@@ -90,7 +90,7 @@
                 <a href="javascript:;"> <span>Level 1.1</span> </a>
             </li>
         </ul>
-    </li>
+    </li> -->
 </ul>  
         
       </nav>
