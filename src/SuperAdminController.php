@@ -25,8 +25,13 @@ class SuperAdminController extends Controller {
   public function __construct(EfrontApiInterface $efront)
 	{
 		$this->efront = $efront;
-    $this->middleware('superadmin');
+    // $this->middleware('superadmin');
 	}
+
+  public function index(){
+     JavaScript::put(['locations' => branch::where('efront_branch_id','!=',0)->get()]);
+     return view('vendor.superadmin.index');
+  }
 
   public function usersget(){
     JavaScript::put(['users' => User::all()]);
@@ -405,7 +410,8 @@ class SuperAdminController extends Controller {
   }
 
   public function branchusers($branch_id)
-  {
+  { 
+    // return response()->json(["hero"]);
       $branch = branch::findOrFail($branch_id);
       $branch->users;
       $efront_branch_users = json_decode($this->efront->BranchDetails($branch->efront_branch_id));

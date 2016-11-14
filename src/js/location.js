@@ -36,7 +36,7 @@ function drawLocationTable(data)
 		var tr = document.createElement('tr');
 		
 		var td = document.createElement('td');
-			td.innerHTML = data[i].location_name;
+			td.innerHTML = data[i].efront_branch_name;
 			td.setAttribute('style','text-transform:capitalize');
 		tr.appendChild(td);	
 
@@ -62,15 +62,15 @@ function drawLocationTable(data)
 function getUsers(id)
 {
 	var locationId = locations[id].id;
-
+	// console.log(locations[id]);
 	// Ajax Call
 	$.ajax({
 	  method: "GET",
-	  url: "locationusers/"+locationId+""
+	  url: "branchdetails/"+locationId+""
 	})
 	  .done(function( msg ) {
-	  	// console.log(msg);
-	  	drawTable(msg);
+	  	console.log(msg);
+	  	// drawTable(msg);
 	  });
 }
 
@@ -124,7 +124,7 @@ function drawTable(data)
 		// 					'<a href="deactivateuser/'+data[i].id+'" class="btn btn-primary">Deactivate</a></div>';	
 		// tr.appendChild(td);		
 
-		console.log(data[i].id);
+		// console.log(data[i].id);
 		tbody.appendChild(tr);	
 	}	
 

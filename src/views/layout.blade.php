@@ -47,7 +47,7 @@
 
       <ul class="nav">
     <li>
-        <a href="/superadmin/users"> <i class="fa fa-flask"></i> <span>Dashboard</span> </a>
+        <a href="/superadmin/index"> <i class="fa fa-flask"></i> <span>Dashboard</span> </a>
     </li>
     <!-- <li>
         <a href="/superadmin/locationlist"> <i class="fa fa-toggle-on"></i> <span>Locations</span> </a>
@@ -192,7 +192,7 @@
   @if(Request::segment(2) == "usersgroup")
     <script src="{{asset('js/superadmin/groups.js')}}"></script>
   @endif
-  @if(Request::segment(2) == "locationlist")
+  @if(Request::segment(2) == "locationlist" || Request::segment(2) == "index")
     <script src="{{asset('js/superadmin/location.js')}}"></script>
   @endif
   @if(Request::segment(2) == "rolelist")

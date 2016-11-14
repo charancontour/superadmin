@@ -8,9 +8,7 @@ Route::get('testgroup',function(){
 //User Routes.
 Route::get('superadmin/users',['uses'=>'SuperAdmin\SuperAdminController@usersget']);
 Route::get('superadmin/deactivatedusers',['uses'=>'SuperAdmin\SuperAdminController@deactivatedusers']);
-Route::get('superadmin/index',function(){
-  return view('vendor.superadmin.layout');
-});
+Route::get('superadmin/index',['uses' =>'SuperAdmin\SuperAdminController@index']);
 
 Route::post('superadmin/createuser',['uses'=>'SuperAdmin\SuperAdminController@usercreate']);
 Route::post('superadmin/updateuser',['uses'=>'SuperAdmin\SuperAdminController@userupdate']);
