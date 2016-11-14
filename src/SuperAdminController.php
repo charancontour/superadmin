@@ -404,4 +404,18 @@ class SuperAdminController extends Controller {
     return redirect()->back();
   }
 
+  public function branchusers($branch_id)
+  {
+      $branch = branch::findOrFail($branch_id);
+      $branch->users;
+      $efront_branch_users = json_decode($this->efront->BranchDetails($branch->efront_branch_id));
+      if($efront_branch_users->success){
+        $efront_branch_users = $efront_branch_users->data->users->list;
+      }else{
+        return response()->json(['error'=>$efront_branch_users->error]);
+      }
+
+      return response()->json(['branch_details'=>$branch,'efront_branch_users'=>$efront_branch_users]);
+  }
+
 }

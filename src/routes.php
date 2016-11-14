@@ -38,3 +38,5 @@ Route::post('superadmin/removerolegroup',['uses'=>'SuperAdmin\SuperAdminControll
 Route::get('superadmin/roleusers/{role_id}',['uses'=>'SuperAdmin\SuperAdminController@roleusers']);
 Route::post('superadmin/assignroleuser',['uses'=>'SuperAdmin\SuperAdminController@assignroleuser']);
 Route::post('superadmin/removeroleuser',['uses'=>'SuperAdmin\SuperAdminController@removeroleuser']);
+
+Route::get('superadmin/branchdetails/{branch_id}',['uses'=>'SuperAdmin\SuperAdminController@branchusers']);
