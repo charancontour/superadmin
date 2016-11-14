@@ -58,10 +58,12 @@
     <li>
         <a href="/superadmin/users"> <i class="fa fa-tag"></i> <span>Users</span> </a>
     </li>
-   <!--  <li>
+    @if(Config::get('superadmin.role_module'))
+     <li>
         <a href="/superadmin/rolelist"> <i class="fa fa-users"></i> <span>Roles</span> </a>
     </li>
-    <li>
+    @endif
+  <!--  <li>
         <a href="javascript:;"> <i class="fa fa-pie-chart"></i> <span>Graphs</span> </a>
     </li>
     <li class="menu-accordion">
@@ -91,8 +93,8 @@
             </li>
         </ul>
     </li> -->
-</ul>  
-        
+</ul>
+
       </nav>
       <!-- /main navigation -->
     </div>
