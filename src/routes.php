@@ -37,4 +37,6 @@ Route::get('superadmin/roleusers/{role_id}',['uses'=>'SuperAdmin\SuperAdminContr
 Route::post('superadmin/assignroleuser',['uses'=>'SuperAdmin\SuperAdminController@assignroleuser']);
 Route::post('superadmin/removeroleuser',['uses'=>'SuperAdmin\SuperAdminController@removeroleuser']);
 
+//Index Routes.
 Route::get('superadmin/branchdetails/{branch_id}',['uses'=>'SuperAdmin\SuperAdminController@branchusers']);
+Route::post('superadmin/adduserfromefront',['uses'=>'SuperAdmin\SuperAdminController@adduserfromefront']);

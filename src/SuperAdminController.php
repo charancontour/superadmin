@@ -411,7 +411,7 @@ class SuperAdminController extends Controller {
   }
 
   public function branchusers($branch_id)
-  { 
+  {
     // return response()->json(["hero"]);
       $branch = branch::findOrFail($branch_id);
       $branch->users;
@@ -423,6 +423,34 @@ class SuperAdminController extends Controller {
       }
 
       return response()->json(['branch_details'=>$branch,'efront_branch_users'=>$efront_branch_users]);
+  }
+
+  public function adduserfromefront(Request $request)
+  {
+    $input = $reuest->all();
+    $strposition = strpos($input['login'],Config::get('efront.LoginPrefix'));
+    if($strposition != 0 && $strposition === false){
+      $input['login'] = Config::get('efront.LoginPrefix').$input['login'];
+    }
+    $validate_user = User::where('login',$input['login'])
+                          ->orWhere('email',$input['email'])
+                          ->first();
+    if(!$validate_user){
+      $result = json_decode($this->efront->EditUser($input->id,$input));
+      if($result->success){
+        $user = User::create(['login'=>$input['login'],
+                      'firstname'=>$input['firstname'],
+                      'lastname'=>$input['lastname'],
+                      'email'=>$input['email'],
+                      'password'=> Hash::make($input['password']),
+                ]);
+      }else{
+        return response()->json(['error'=>'Couldnot be edited in efront.']);
+      }
+    }else{
+      return response()->json(['error'=>'login or email is already taken.']);
+    }
+    return response()->json(['success'=>'User created Successfully with prefix']);
   }
 
 }
