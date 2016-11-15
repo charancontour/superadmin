@@ -180,7 +180,8 @@ class SuperAdminController extends Controller {
   }
 
   public function locationlist(){
-    JavaScript::put(['locations' => Location::all()]);
+    // JavaScript::put(['locations' => Location::all()]);
+    JavaScript::put(['locations' => branch::where('efront_branch_id','!=',0)->get()]);
     return view('vendor.superadmin.locations');
   }
 

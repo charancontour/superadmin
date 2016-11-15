@@ -1,43 +1,5 @@
 @extends('vendor.superadmin.layout')
 @section('content')
-<!-- Start of Stats -->
-<div class="row">
-  <div class="col-md-4"> 
-    <div> 
-      <div class="widget bg-white"> 
-        <div class="widget-icon bg-blue pull-left fa fa-users"> </div> 
-        <div class="overflow-hidden"> 
-          <span class="widget-title" id="efront-users">0</span> 
-          <span class="widget-subtitle">Efront Users</span> 
-        </div> 
-      </div> 
-    </div> 
-  </div>
-  <div class="col-md-4"> 
-    <div> 
-      <div class="widget bg-white"> 
-        <div class="widget-icon bg-info pull-left fa fa-users"> </div> 
-        <div class="overflow-hidden"> 
-          <span class="widget-title" id="app-users">0</span> 
-          <span class="widget-subtitle">Users In App</span> 
-        </div> 
-      </div> 
-    </div> 
-  </div>
-  <div class="col-md-4"> 
-    <div> 
-      <div class="widget bg-white"> 
-        <div class="widget-icon bg-danger pull-left fa fa-users"> </div> 
-        <div class="overflow-hidden"> 
-          <span class="widget-title" id="deactivated-users">0</span> 
-          <span class="widget-subtitle">Deactivated Users</span> 
-        </div> 
-      </div> 
-    </div> 
-  </div>
-</div>
-<!-- /End of Stats -->
-
 <!-- Start of Panel -->
 <div class="panel">
   <!-- Panel Header -->
@@ -106,7 +68,33 @@
           <h4 class="modal-title">Users for the Location</h4>
         </div>
         <div class="modal-body">
-         
+            <!-- Start of Stats -->
+            <div class="row">
+              <div class="col-md-6"> 
+                <div> 
+                  <div class="widget bg-white" style="border:1px solid #ddd;"> 
+                    <div class="widget-icon bg-blue pull-left fa fa-users"> </div> 
+                    <div class="overflow-hidden"> 
+                      <span class="widget-title" id="efront-users">0</span> 
+                      <span class="widget-subtitle">Efront Users</span> 
+                    </div> 
+                  </div> 
+                </div> 
+              </div>
+              <div class="col-md-6"> 
+                <div> 
+                  <div class="widget bg-white" style="border:1px solid #ddd;"> 
+                    <div class="widget-icon bg-info pull-left fa fa-users"> </div> 
+                    <div class="overflow-hidden"> 
+                      <span class="widget-title" id="app-users">0</span> 
+                      <span class="widget-subtitle">Users In App</span> 
+                    </div> 
+                  </div> 
+                </div> 
+              </div>
+            </div>
+            <!-- /End of Stats -->
+            <div class="users-for-location"></div>
         </div>
       </div>
     </div>
