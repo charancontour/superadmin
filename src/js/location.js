@@ -6,7 +6,7 @@ var locationTable = drawLocationTable(locations);
 
 function drawLocationTable(data)
 {
-	console.log(data);
+	// console.log(data);
 	var table = document.createElement('table');
 		table.setAttribute('class','table table-bordered bordered table-striped table-condensed')
 		table.setAttribute('id','location-table');
@@ -162,7 +162,7 @@ function drawTable(data)
 		{
 			var td = document.createElement('td');
 				td.innerHTML = 	'<div class="action-btns">'+
-								'<a class="btn btn-primary" data-toggle="modal" data-target=".edit-user">Add To App</a>'; 
+								'<a class="btn btn-primary" onclick="addUserToApp();">Add To App</a></div>'; 
 			tr.appendChild(td);		
 		}
 		else 
@@ -177,9 +177,16 @@ function drawTable(data)
 
 	table.appendChild(tbody);
 	
-	console.log(table);
+	// console.log(table);
 
 	$('.get-users .modal-body .users-for-location').html(table);
 
 	$('#user-table').dataTable();	
+}
+
+
+// Add User To App
+function addUserToApp()
+{
+	alert('fuck you asshole');
 }
