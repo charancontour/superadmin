@@ -158,11 +158,13 @@ function drawTable(data)
 			td.innerHTML = data[i].email;
 		tr.appendChild(td);	
 
+		var addUser = JSON.stringify(data[i]);
+		
 		if(data[i].flag != true)
 		{
 			var td = document.createElement('td');
-				td.innerHTML = 	'<div class="action-btns">'+
-								'<a class="btn btn-primary" onclick="addUserToApp();">Add To App</a></div>'; 
+				td.innerHTML = 	"<div class='action-btns'>"+
+								"<a data-toggle='modal' data-target='.add-user-to-app' class='btn btn-primary' onclick='addUserToApp(this)' data-info='"+addUser+"'>Add To App</a></div>"; 
 			tr.appendChild(td);		
 		}
 		else 
@@ -186,7 +188,8 @@ function drawTable(data)
 
 
 // Add User To App
-function addUserToApp()
+function addUserToApp(t)
 {
-	alert('fuck you asshole');
+	var data = JSON.parse(t.getAttribute('data-info'));
+	      
 }

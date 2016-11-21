@@ -98,5 +98,68 @@
         </div>
       </div>
     </div>
+</div> 
+
+<!-- Modal PoP Up for Add Users to the App -->
+<div class="modal bs-modal-sm add-user-to-app" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title">Add User to the App</h4>
+        </div>
+        <div class="modal-body">
+           <form class="form-horizontal" role="form" method="POST" action="{{ url('/superadmin/adduserfromefront') }}">
+              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <div class="form-group">
+                    <label class="col-md-4 control-label">Employee ID</label>
+                    <div class="col-md-6">
+                      <input type="text" id="employee_id" class="form-control" required name="login" value="{{ old('login') }}">
+                    </div>
+                </div>
+                    <div class="form-group">
+            <label class="col-md-4 control-label">Firstname</label>
+            <div class="col-md-6">
+              <input type="text" id="firstname" class="form-control" required name="firstname" value="{{ old('firstname') }}">
+            </div>
+          </div>
+                  <div class="form-group">
+            <label class="col-md-4 control-label">Lastname</label>
+            <div class="col-md-6">
+              <input type="text" id="lastname" class="form-control" required name="lastname" value="{{ old('lastname') }}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label">E-Mail Address</label>
+            <div class="col-md-6">
+              <input type="email" id="email_addr" class="form-control" required name="email" value="{{ old('email') }}">
+            </div>
+          </div>
+            <div class="form-group">
+              <label class="col-md-4 control-label">Location</label>
+              <div class="col-md-6">
+              <select class="form-control" name="location_id" required id="location_id">
+                @foreach(App\Location::all() as $location)
+                  <option value={{$location->id}}>{{$location->location_name}}</option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label">Password</label>
+            <div class="col-md-6">
+              <input type="password" required class="form-control" name="password">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="col-md-6 col-md-offset-4">
+              <button type="submit" class="btn btn-primary btn-block">Add User To App</button>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
 </div>  
 @endsection

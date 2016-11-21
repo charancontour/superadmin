@@ -445,12 +445,12 @@ class SuperAdminController extends Controller {
                       'password'=> Hash::make($input['password']),
                 ]);
       }else{
-        return response()->json(['error'=>'Couldnot be edited in efront.']);
+        return response()->json(['error'=>'Couldnt be edited in efront.']);
       }
     }else{
-      return response()->json(['error'=>'login or email is already taken.']);
+      return response()->json(['error'=>'Login or Email is already taken.']);
     }
-    return response()->json(['success'=>'User created Successfully with prefix']);
+    return response()->json(['success'=>'User created Successfully with prefix.']);
   }
 
 }
