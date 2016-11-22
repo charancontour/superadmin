@@ -427,7 +427,8 @@ class SuperAdminController extends Controller {
 
   public function adduserfromefront(Request $request)
   {
-    $input = $reuest->all();
+    $input = $request->all();
+    dd($input);
     $strposition = strpos($input['login'],Config::get('efront.LoginPrefix'));
     if($strposition != 0 && $strposition === false){
       $input['login'] = Config::get('efront.LoginPrefix').$input['login'];

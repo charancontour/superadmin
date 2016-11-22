@@ -151,7 +151,7 @@
               <input type="password" required class="form-control" name="password">
             </div>
           </div>
-          
+          <input type="hidden" name="branch_id" value="" id="branch_id">
           <div class="form-group">
             <div class="col-md-6 col-md-offset-4">
               <button type="submit" class="btn btn-primary btn-block">Add User To App</button>
