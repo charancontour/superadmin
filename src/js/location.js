@@ -63,6 +63,8 @@ function getUsers(id)
 {
 	document.getElementById('efront-users').innerHTML = '';
 
+	document.getElementById('location-click-id').value = id;
+
 	document.getElementById('app-users').innerHTML = '';
 
 	$('.get-users .modal-body .users-for-location').html('');
@@ -75,14 +77,14 @@ function getUsers(id)
 	  url: "branchdetails/"+locationId+""
 	})
 	  .done(function( msg ) {
-	  	console.log(msg);
+	  	// console.log(msg);
 	  	formatUsers(msg);
 	  });
 }
 
 function formatUsers(data)
 {
-	console.log(data);
+	// console.log(data);
 	
 	var efrontUsers = data.efront_branch_users;
 	
@@ -173,7 +175,7 @@ function drawTable(data)
 		{
 			var td = document.createElement('td');
 				td.innerHTML = 	"<div class='action-btns'>"+
-								"<a data-toggle='modal' data-target='.add-user-to-app' class='btn btn-primary' onclick='addUserToApp(this)' data-info='"+addUser+"'>Add To App</a></div>"; 
+								"<a data-toggle='modal' data-target='.add-user-to-app' class='btn btn-primary btn-block' onclick='addUserToApp(this)' data-info='"+addUser+"'>Add To App</a></div>"; 
 			tr.appendChild(td);		
 		}
 		else 
@@ -200,10 +202,6 @@ function drawTable(data)
 function addUserToApp(t)
 {
 	var data = JSON.parse(t.getAttribute('data-info'));
-	
-	console.log(data.branch_name);
-
-	var b = document.getElementById('location_id');
 
 	document.getElementById('employee_id').value = data.login;
 
@@ -211,10 +209,55 @@ function addUserToApp(t)
 
 	document.getElementById('lastname').value = data.surname;
 
-	document.getElementById('email_addr').value = data.email;
+	document.getElementById('email').value = data.email;
 
 	document.getElementById('branch_id').value = data.branch_id;
 
-	// document.getElementById('location_id').value = data.branch_name;
+	document.getElementById('user_id').value = data.id;
+}
 
+function add(t)
+{
+	var login = document.getElementById('employee_id').value;
+
+	var firstname = document.getElementById('firstname').value;
+
+	var lastname = document.getElementById('lastname').value;
+
+	var email = document.getElementById('email').value;
+
+	var branch_id = document.getElementById('branch_id').value;
+
+	var user_id = document.getElementById('user_id').value;
+
+	var password = document.getElementById('password').value;
+
+	$.ajax({
+	  method: "POST",
+	  url: "adduserfromefront",
+	  data : {login:login,password:password,firstname:firstname,lastname:lastname,email:email,efront_user_id:user_id,efront_branch_id:branch_id}
+	})
+	  .done(function( msg ) {
+	  	$('.get-users .modal-header .alert').remove();
+	  	if(msg.success)
+	  	{
+	  		var successAlert = '<div class="alert alert-success">'+
+								'<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>'+
+								 msg.success+
+								'</div>';
+	  		$('.get-users .modal-header').prepend(successAlert);
+
+	  		var loc_id = parseInt(document.getElementById('location-click-id').value,10);
+
+	  		getUsers(loc_id);
+	  	}
+	  	else 
+	  	{
+	  		var errorAlert = '<div class="alert alert-danger">'+
+								'<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>'+
+								 msg.error+
+								'</div>';
+	  		$('.get-users .modal-header').prepend(errorAlert);
+	  	}	
+	  });
 }

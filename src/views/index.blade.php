@@ -132,29 +132,30 @@
           <div class="form-group">
             <label class="col-md-4 control-label">E-Mail Address</label>
             <div class="col-md-6">
-              <input type="email" id="email_addr" class="form-control" required name="email" value="{{ old('email') }}">
+              <input type="email" id="email" class="form-control" required name="email" value="{{ old('email') }}">
             </div>
           </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label class="col-md-4 control-label">Location</label>
               <div class="col-md-6">
-              <select class="form-control" name="location_id" required id="location_id">
-                @foreach(App\Location::all() as $location)
-                  <option value={{$location->id}}>{{$location->location_name}}</option>
-                @endforeach
-              </select>
-            </div>
-          </div>
+                <select class="form-control" name="location_id" required id="location_id">
+                  @foreach(App\Location::all() as $location)
+                    <option value={{$location->id}}>{{$location->location_name}}</option>
+                  @endforeach
+                </select>
+              </div> 
+            </div> -->
           <div class="form-group">
             <label class="col-md-4 control-label">Password</label>
             <div class="col-md-6">
-              <input type="password" required class="form-control" name="password">
+              <input type="password" required class="form-control" name="password" id="password">
             </div>
           </div>
-          <input type="hidden" name="branch_id" value="" id="branch_id">
+          <input type="hidden" name="efront_branch_id" value="" id="branch_id">
+          <input type="hidden" name="efront_user_id" value="" id="user_id">
           <div class="form-group">
             <div class="col-md-6 col-md-offset-4">
-              <button type="submit" class="btn btn-primary btn-block">Add User To App</button>
+              <button type="button" id="submit-btn" data-dismiss="modal" class="btn btn-primary btn-block" onclick="add(this)">Add User To App</button>
             </div>
           </div>
         </form>
@@ -162,4 +163,7 @@
       </div>
     </div>
 </div>  
+
+<!-- Input Location Id for ajax call -->
+<input type="hidden" value="" id="location-click-id">
 @endsection

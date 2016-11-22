@@ -437,6 +437,7 @@ class SuperAdminController extends Controller {
       'efront_branch_id'=>'required|numeric|min:1'
     ]);
     $input = $request->all();
+    
     $branch = branch::where('efront_branch_id',$input['efront_branch_id'])->where('efront_branch_id','!=',0)->first();
     if(!$branch){
       return response()->json(['error'=>'Efront branch doesnot exists with our Database.']);
@@ -446,9 +447,12 @@ class SuperAdminController extends Controller {
       return response()->json(['error'=>'Location doesnot exists with our Database.']);
     }
     $strposition = strpos($input['login'],Config::get('efront.LoginPrefix'));
-    if($strposition != 0 && $strposition === false){
+    if($strposition === false){
       $input['login'] = Config::get('efront.LoginPrefix').$input['login'];
+      // dd($input);
     }
+
+    // dd($strposition);
     $validate_user = User::where('login',$input['login'])
                           ->first();
     if(!$validate_user){
@@ -459,8 +463,8 @@ class SuperAdminController extends Controller {
                       'lastname'=>$input['lastname'],
                       'email'=>$input['email'],
                       'password'=> Hash::make($input['password']),
-                      'location_id'=>$location_id,
-                      'branch_id'=>$branch_id,
+                      'location_id'=>$location->id,
+                      'branch_id'=>$branch->id,
                       'role_id'=>$this->student_role_id,
                       'efront_user_id'=>$input['efront_user_id'],
                       'user_status_id'=>$this->active_status_id,
