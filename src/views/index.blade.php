@@ -9,7 +9,7 @@
             <li class="active">Locations</li>
         </ol>
         <div class="pull-right">
-          <button type="button" class="btn btn-warning" style="width:200px;margin-top:-2em" data-toggle="modal" data-target=".add-location" data-dismiss="modal">Add Location</button>
+          <button type="button" class="btn btn-warning" style="width:200px;margin-top:-2em;display:none" data-toggle="modal" data-target=".add-location" data-dismiss="modal">Add Location</button>
         </div>
         <br/>
         @if (count($errors) > 0)
@@ -41,7 +41,7 @@
         <div class="modal-body">
           <form class="form-horizontal" role="form" method="POST" action="{{ url('/superadmin/createlocation') }}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                
+
               <div class="form-group">
           <label class="col-md-4 control-label">Add Location</label>
           <div class="col-md-6">
@@ -70,27 +70,27 @@
         <div class="modal-body">
             <!-- Start of Stats -->
             <div class="row">
-              <div class="col-md-6"> 
-                <div> 
-                  <div class="widget bg-white" style="border:1px solid #ddd;"> 
-                    <div class="widget-icon bg-blue pull-left fa fa-users"> </div> 
-                    <div class="overflow-hidden"> 
-                      <span class="widget-title" id="efront-users">0</span> 
-                      <span class="widget-subtitle">Efront Users</span> 
-                    </div> 
-                  </div> 
-                </div> 
+              <div class="col-md-6">
+                <div>
+                  <div class="widget bg-white" style="border:1px solid #ddd;">
+                    <div class="widget-icon bg-blue pull-left fa fa-users"> </div>
+                    <div class="overflow-hidden">
+                      <span class="widget-title" id="efront-users">0</span>
+                      <span class="widget-subtitle">Efront Users</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="col-md-6"> 
-                <div> 
-                  <div class="widget bg-white" style="border:1px solid #ddd;"> 
-                    <div class="widget-icon bg-info pull-left fa fa-users"> </div> 
-                    <div class="overflow-hidden"> 
-                      <span class="widget-title" id="app-users">0</span> 
-                      <span class="widget-subtitle">Users In App</span> 
-                    </div> 
-                  </div> 
-                </div> 
+              <div class="col-md-6">
+                <div>
+                  <div class="widget bg-white" style="border:1px solid #ddd;">
+                    <div class="widget-icon bg-info pull-left fa fa-users"> </div>
+                    <div class="overflow-hidden">
+                      <span class="widget-title" id="app-users">0</span>
+                      <span class="widget-subtitle">Users In App</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <!-- /End of Stats -->
@@ -98,7 +98,7 @@
         </div>
       </div>
     </div>
-</div> 
+</div>
 
 <!-- Modal PoP Up for Add Users to the App -->
 <div class="modal bs-modal-sm add-user-to-app" tabindex="-1" role="dialog" aria-hidden="true">
@@ -143,7 +143,7 @@
                     <option value={{$location->id}}>{{$location->location_name}}</option>
                   @endforeach
                 </select>
-              </div> 
+              </div>
             </div> -->
           <div class="form-group">
             <label class="col-md-4 control-label">Password</label>
@@ -162,7 +162,7 @@
         </div>
       </div>
     </div>
-</div>  
+</div>
 
 <!-- Input Location Id for ajax call -->
 <input type="hidden" value="" id="location-click-id">

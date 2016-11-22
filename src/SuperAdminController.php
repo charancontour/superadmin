@@ -52,14 +52,15 @@ class SuperAdminController extends Controller {
         'login' => 'required|unique:users',
         'firstname' => 'required',
         'lastname' =>'required',
-        'email'=>'required|unique:users',
+        'email'=>'required|email',
         'location_id'=>'required|exists:locations,id',
         'password'=>'required',
         'confirm-password'=>'required|same:password'
     ]);
 
-    if(is_numeric($input['login'])){
-      $input['login'] = Config::get('efront.LoginPrefix') . $input['login'];
+    $strposition = strpos($input['login'],Config::get('efront.LoginPrefix'));
+    if($strposition === false){
+      $input['login'] = Config::get('efront.LoginPrefix').$input['login'];
     }
     $input['user_status_id'] = $this->active_status_id;
     $location = Location::find($input['location_id']);
@@ -101,12 +102,14 @@ class SuperAdminController extends Controller {
         'login' => 'required|unique:users,login,'.$user->id,
         'firstname' => 'required',
         'lastname' =>'required',
-        'email'=>'required|unique:users,email,'.$user->id,
+        'email'=>'required|email',
         'location_id'=>'required|exists:locations,id',
         'confirm-password'=>'same:password'
     ]);
-    if(is_numeric($input['login'])){
-      $input['login'] = Config::get('efront.LoginPrefix') . $input['login'];
+    $strposition = strpos($input['login'],Config::get('efront.LoginPrefix'));
+    if($strposition === false){
+      $input['login'] = Config::get('efront.LoginPrefix').$input['login'];
+      // dd($input);
     }
     $input['user_status_id'] = $this->active_status_id;
     $location = Location::findOrFail($input['location_id']);
@@ -431,13 +434,13 @@ class SuperAdminController extends Controller {
       'login'=>'required',
       'firstname'=> 'required',
       'lastname'=> 'required',
-      'email'=>'required',
+      'email'=>'required|email',
       'password'=>'required',
       'efront_user_id'=>'required|numeric|min:1',
       'efront_branch_id'=>'required|numeric|min:1'
     ]);
     $input = $request->all();
-    
+
     $branch = branch::where('efront_branch_id',$input['efront_branch_id'])->where('efront_branch_id','!=',0)->first();
     if(!$branch){
       return response()->json(['error'=>'Efront branch doesnot exists with our Database.']);
